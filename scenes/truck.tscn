@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/truck.gd" id="1"]
+[sub_resource type="BoxShape3D" id="body_shape"]
+size = Vector3(1.85, 1.64, 2.55)
+
+[node name="Quzu" type="CharacterBody3D"]
+script = ExtResource("1")
+floor_snap_length = 0.25
+floor_max_angle = 0.6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.82, 0)
+shape = SubResource("body_shape")
