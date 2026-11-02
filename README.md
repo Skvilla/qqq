@@ -106,6 +106,7 @@ Betik Bash ve `rg` (ripgrep) kullanır. Testlerin kendisi yalnızca Godot'a bağ
 ```bash
 godot --headless --path . --editor --import --quit
 godot --headless --path . --fixed-fps 60 --script tests/test_phase1.gd
+godot --headless --path . --fixed-fps 60 --script tests/test_regressions.gd
 ```
 
 Ayrıntılı kabul senaryoları ve doğrulama sınırları: [`docs/TESTLER.md`](docs/TESTLER.md).

@@ -2,7 +2,7 @@
 
 ## Otomatik kontroller
 
-Godot 4.6.3 Standard, Linux x86_64 üzerinde çalıştırıldı: **73 kontrol geçti, 0 başarısız**. Ayrı otomatik demo çalışması `10.000` saniye ve `601` örnekle tamamlandı. `tests/run_tests.sh` import, entegrasyon ve otomatik demo adımlarının hem çıkış kodunu hem Godot hata çıktısını denetler. Loglar Git'e alınmayan `test-results/` altına yazılır.
+Godot 4.6.3 Standard, Linux x86_64 üzerinde çalıştırıldı: **73 entegrasyon + 51 regresyon kontrolü geçti, 0 başarısız**. Ayrı otomatik demo çalışması `10.000` saniye ve `601` örnekle tamamlandı. `tests/run_tests.sh` import, entegrasyon, regresyon ve otomatik demo adımlarının hem çıkış kodunu hem Godot hata çıktısını denetler. Loglar Git'e alınmayan `test-results/` altına yazılır.
 
 Entegrasyon testi gerçek `scenes/studio.tscn` sahnesini açar. Kontroller:
 
@@ -19,6 +19,14 @@ Entegrasyon testi gerçek `scenes/studio.tscn` sahnesini açar. Kontroller:
 - Gerçek StaticBody3D engeliyle çarpışma.
 
 Başarılı entegrasyon çıktısı: `PHASE1_TEST_RESULT checks=... failed=0`. Test başarısızsa süreç `1` döner. Sıfır test veya yalnızca sözdizimi denetimi başarı sayılmaz.
+
+`tests/test_regressions.gd`, denetimde bulunan sınır durumlarını ayrıca doğrular:
+
+- JSON alanlarında yanlış türler (örneğin `"format": false`, `"version": []`), eksik alanlar ve yanlış kök/örnek türleri script hatası üretmeden reddedilmeli. Sürmekte olan oynatma ve mevcut kayıt korunmalı.
+- Oynatmada yüz düğmeleri devre dışı olmalı. Önceden kuyruğa alınmış bir düğme olayı, gerçek ifadeden farklı veya birden fazla UI seçimi bırakmamalı. Durduktan sonra yüz kontrolü geri gelmeli.
+- Ondalık süre yuvarlaması dakika sınırını doğru taşımalı: `59.96` saniye `01:00.0` görünmeli.
+
+Başarılı regresyon çıktısı: `REGRESSION_TEST_RESULT checks=51 failed=0`.
 
 ## Görsel kontrol
 

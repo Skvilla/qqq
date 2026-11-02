@@ -156,9 +156,13 @@ func load_take(path: String = DEFAULT_PATH) -> bool:
 static func validate_take(data: Variant) -> String:
 	if not data is Dictionary:
 		return "Kayıt kökü bir JSON nesnesi olmalı."
-	if data.get("format") != "quzu-take" or data.get("version") != FORMAT_VERSION:
+	# GDScript comparisons between unrelated Variant types raise a runtime error.
+	# Check types before comparing values from untrusted, but valid, JSON.
+	if not data.get("format") is String or data["format"] != "quzu-take":
 		return "Desteklenmeyen kayıt biçimi veya sürümü."
-	if data.get("sample_rate") != SAMPLE_RATE:
+	if not _number(data.get("version")) or data["version"] != FORMAT_VERSION:
+		return "Desteklenmeyen kayıt biçimi veya sürümü."
+	if not _number(data.get("sample_rate")) or data["sample_rate"] != SAMPLE_RATE:
 		return "Desteklenmeyen örnekleme hızı."
 	if not _number(data.get("duration")) or float(data["duration"]) <= 0 or float(data["duration"]) > MAX_DURATION:
 		return "Geçersiz kayıt süresi."

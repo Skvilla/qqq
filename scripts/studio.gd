@@ -93,6 +93,9 @@ func _demo() -> void:
 func _expression(value: String) -> void:
 	if recorder.state != "playing":
 		truck.set_expression(value)
+	else:
+		# A button event may already be queued when playback starts.
+		ui.set_expression(truck.expression)
 
 func _reset() -> void:
 	recorder.stop()

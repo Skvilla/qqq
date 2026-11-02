@@ -162,6 +162,8 @@ func update_transport(state: String, time: float, length: float, has_take: bool)
 	status_label.modulate = Color("bb664e") if state == "recording" else Color.WHITE
 	record_button.text = "■  Kaydı bitir" if state == "recording" else "●  Kayıt  [R]"
 	play_button.disabled = not has_take
+	for button in face_buttons.values():
+		button.disabled = state == "playing"
 	_updating = false
 
 func set_expression(value: String) -> void:
@@ -175,7 +177,8 @@ func notify(text: String) -> void:
 	message_label.text = text
 
 func _time(value: float) -> String:
-	return "%02d:%04.1f" % [int(value) / 60, fmod(value, 60.0)]
+	var tenths := maxi(0, roundi(value * 10.0))
+	return "%02d:%02d.%d" % [tenths / 600, (tenths / 10) % 60, tenths % 10]
 
 func _button(text: String, action: Callable, color: Color = Color("e6e9da")) -> Button:
 	var button := Button.new()
